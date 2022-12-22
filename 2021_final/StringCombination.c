@@ -1,33 +1,28 @@
 #include<stdio.h>
-#include<string.h>
 
 int n, k;
-char str[25][100];
-char output[25][100];
+char str[20][15];
+int prt[20];
 
-// 已枚舉cnt項 正在選擇第cnt+1項 且這項在lst後
-void solve(int cnt, int lst) {
-    if (cnt == k) {
-        int i;
-        for (i = 0;i < k;i++) {
-            printf("%s ", output[i]);
+void solve(int last, int chs) {
+    if (chs == k) {
+        for (int i = 0;i < chs;i++) {
+            printf("%s ", str[prt[i]]);
         }
         printf("\n");
         return;
     }
-    int i;
-    for (i = lst+1;i < n;i++) {
-        strcpy(output[cnt], str[i]);
-        solve(cnt+1, i);
+    for (int i = last+1;i < n;i++) {
+        prt[chs] = i;
+        solve(i, chs+1);
     }
 }
 
 int main(void) {
     scanf("%d%d", &n, &k);
-    int i;
-    for (i = 0;i < n;i++) {
+    for (int i = 0;i < n;i++) {
         scanf("%s", str[i]);
     }
-    solve(0, -1);
+    solve(-1, 0);
     return 0;
 }
